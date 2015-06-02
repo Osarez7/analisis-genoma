@@ -78,7 +78,7 @@ module.exports = {
       
 
           
-         res.view('procesando');
+         res.view('procesando',{});
 
        
       });
