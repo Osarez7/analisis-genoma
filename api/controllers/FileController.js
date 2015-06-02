@@ -28,13 +28,14 @@ module.exports = {
                                           
         if (err) return res.serverError(err);               
         //  IF ERROR Return and send 500 error with error
-       /* var streamEscritura = fs.createWriteStream(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"));
-         streamEscritura.on('end',function(){
+       var streamEscritura = fs.createWriteStream(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"));
+
+          streamEscritura.on('finish',function(){
            // res.json({status:200,file:files});
-             console.log("Finalizo");
+             console.log("Finalizo finish");
              return res.redirect('/file/listarSNP')
          });
-*/
+
        /* console.log(files)
         fs.createReadStream(files[0].fd)
         .pipe(dna.parse())
@@ -54,13 +55,18 @@ module.exports = {
                 //console.log(snps);
                 console.log("Ya se leyo el archivo " + name);
                 
+                  var es = require('event-stream')
+                  var reader = es.readArray([snps])
+           
+              console.log("Despues escribir");
+              reader.pipe(JSONStream.stringify()).pipe(streamEscritura);
+              console.log("Despues escribir sincrono");
 
-
-                fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify( snps), function(){
+               /* fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify(snps), function(){
                        return res.redirect('/file/listarSNP')
                    //console.log("Termino de escribir ");
                    
-                });
+                });*/
 
                 //JSONStream.stringify(snps).pipe(streamEscritura);
                 //res.json({status:200,file:files});
@@ -101,9 +107,17 @@ module.exports = {
   analizar: function(req, res){
 
      var archivo = req.param('archivo');
-     var data = require(path.join(__dirname,"..","..",".tmp","uploads",archivo));
+  
+      var readStream  = fs.createReadStream(path.join(__dirname,"..","..",".tmp","uploads",archivo));
 
-     res.json({status:200, hombre:  male(data), genoma:data});
+      var writer = es.writeArray(function (err, array){
+      //array deepEqual [1, 2, 3]
+      res.json({status:200, hombre:  male(array[0]), genoma: array});
+    })
+
+      readStream.pipe(writer);
+
+     
   }
 };
 
