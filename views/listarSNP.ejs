@@ -1,3 +1,5 @@
+<div id="contenedor">
+
 <p>Selecciona el genoma que quieres verificar</p>
 
 <form  action="/file/analizar" method="POST">
@@ -7,19 +9,9 @@
        <option><%= file %></option>
       <% }) %>
 
-</select></br>
+</select>
 
-<label>Selecciona el tipo de verificacion</label>
-</input type="checkbox">
-</checkbox> 
-</br>
-</input type="checkbox">
+<button type="submit"> Verificar </button>
 
-</br>
-<label> Has tu propia validacion de este genmoa</label>
-</textarea>
-
-
-<button type="submit">Enviar</button>
-
-<form>
+</form>
+</div>

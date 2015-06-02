@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>New Sails App</title>
+    <title>Genoma Humano - Bioinformatica</title>
 
     <!-- Viewport mobile tag for sensible mobile support -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -27,13 +27,41 @@
             + Import stylesheets from other directories
             + Use a different or additional preprocessor, like SASS, SCSS or Stylus
     -->
+    <style>
+     footer, header {
+    background: #41BF75 none repeat scroll 0 0;
+    color: #fff;
+    font-size: 20px;
+    height: 14px;
+    padding: 25px 13px;
+}
 
+footer{
+  height: 30px !important;
+}
+
+#contenedor {
+    min-height: 440px;
+}
+button{
+  height: 23px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 100px;
+}
+    </style>
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/importer.css">
     <!--STYLES END-->
   </head>
 
   <body>
+
+    <header>
+     An&aacute;lisis del Genoma Humano
+  
+    </header>
+
     <%- body %>
 
 
@@ -86,6 +114,11 @@
           + Use a different preprocessor, like TypeScript
 
     -->
+    <footer>
+      Julio C&eacute;sar Saldana Baez </br>
+      Daniel Ricardo Martin
+
+    </footer>
 
     <!--SCRIPTS-->
     <script src="/js/dependencies/sails.io.js"></script>
