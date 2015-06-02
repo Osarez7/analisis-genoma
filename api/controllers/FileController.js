@@ -53,7 +53,8 @@ module.exports = {
       dna.parse(txt.toString(), function(err, snps){
       console.log(snps);
       fs.writeFileSync(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify(snps));
-      res.json({status:200,file:files});
+      //res.json({status:200,file:files});
+       return res.redirect('/file/listarSNP')
 });
 
        
