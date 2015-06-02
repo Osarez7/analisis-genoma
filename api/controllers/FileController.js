@@ -20,27 +20,50 @@ module.exports = {
 
     var uploadFile = req.file('uploadFile');
     var name = req.param('name');
-   // console.log(uploadFile);
+   if(name){
+       // console.log(uploadFile);
      console.log(name);
      uploadFile.upload({maxBytes: 100000000},function onUploadComplete (err, files) {        
       //  Files will be uploaded to .tmp/uploads
                                           
         if (err) return res.serverError(err);               
         //  IF ERROR Return and send 500 error with error
-        var streamEscritura = fs.createWriteStream(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"));
-         streamEscritura.on('finish',function(){
+       /* var streamEscritura = fs.createWriteStream(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"));
+         streamEscritura.on('end',function(){
            // res.json({status:200,file:files});
+             console.log("Finalizo");
              return res.redirect('/file/listarSNP')
          });
-
+*/
        /* console.log(files)
         fs.createReadStream(files[0].fd)
         .pipe(dna.parse())
         .pipe(JSONStream.stringify())
         .pipe(streamEscritura);*/
 
+        var fileContent = "";
+        var readStream  = fs.createReadStream(files[0].fd);  
 
-        var txt = fs.readFileSync(files[0].fd);  
+        readStream.on('data', function (data) {
+         fileContent += data;
+       });
+
+       readStream.on('end', function () {
+        
+            dna.parse(fileContent.toString(), function(err, snps){
+                //console.log(snps);
+                console.log("Ya se leyo el archivo " + name);
+                fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify( snps), function(){
+
+                   return res.redirect('/file/listarSNP');
+                });
+
+                //JSONStream.stringify(snps).pipe(streamEscritura);
+                //res.json({status:200,file:files});
+                 //return res.redirect('/file/listarSNP')
+          });
+
+      });
            //console.log(typeof text);  
 
            /* dna.parse(text.toString(), function(err, snps){
@@ -50,16 +73,15 @@ module.exports = {
             }); */
       
 
-      dna.parse(txt.toString(), function(err, snps){
-      console.log(snps);
-      fs.writeFileSync(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify(snps));
-      //res.json({status:200,file:files});
-       return res.redirect('/file/listarSNP')
-});
+    
 
        
       });
-//res.json({status:200,file:files});
+//res.json({status:200,file:files})
+   }else{
+
+    res.json({status: 500 ,error: "Debe especificar un nombre para el archivo"})
+   }
   },
   listarSNP: function  (req, res) {
 
