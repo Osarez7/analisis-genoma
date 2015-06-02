@@ -1,3 +1,9 @@
 # analisis-genoma
 
-a [Sails](http://sailsjs.org) application
+Aplicación para el anállisis del genoma humano a partir de archivos SNP 
+
+
+Creado Por:
+
+Julio César Saldaña 
+Daniel Ricardo Martin
