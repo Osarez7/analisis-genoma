@@ -57,8 +57,8 @@ module.exports = {
 
 
                 fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify( snps), function(){
-
-                   console.log("Termino de escribir ");
+                       return res.redirect('/file/listarSNP')
+                   //console.log("Termino de escribir ");
                    
                 });
 
@@ -78,7 +78,7 @@ module.exports = {
       
 
           
-         res.view('procesando',{});
+         //res.view('procesando',{});
 
        
       });
