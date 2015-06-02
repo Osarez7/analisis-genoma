@@ -53,9 +53,13 @@ module.exports = {
             dna.parse(fileContent.toString(), function(err, snps){
                 //console.log(snps);
                 console.log("Ya se leyo el archivo " + name);
+                
+
+
                 fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify( snps), function(){
 
-                   return res.redirect('/file/listarSNP');
+                   console.log("Termino de escribir ");
+                   
                 });
 
                 //JSONStream.stringify(snps).pipe(streamEscritura);
@@ -73,7 +77,8 @@ module.exports = {
             }); */
       
 
-    
+          
+         res.view('procesando');
 
        
       });
