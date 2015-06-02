@@ -1,8 +1,15 @@
+<div id="contenedor">
+
+<p> Seleccionar archivo SNP  o seleccionar uno de los ejemplos</p>
 <!-- enctype="multipart/form-data" -->
 <form id="uploadForm"
       enctype="multipart/form-data"
       action="/file/upload"
       method="post">
+        <label>Escribe un nombre para el archivo</label>
+        <input type="text" name="name"></input>
         <input type="file" name="uploadFile" />
         <input type="submit" value="submit"/>
 </form>
+
+</div>
