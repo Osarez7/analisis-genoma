@@ -27,13 +27,36 @@ module.exports = {
                                           
         if (err) return res.serverError(err);               
         //  IF ERROR Return and send 500 error with error
-        console.log(files)
+        var streamEscritura = fs.createWriteStream(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"));
+         streamEscritura.on('finish',function(){
+           // res.json({status:200,file:files});
+             return res.redirect('/file/listarSNP')
+         });
+
+       /* console.log(files)
         fs.createReadStream(files[0].fd)
-        .pipe(dna.createParser())
+        .pipe(dna.parse())
         .pipe(JSONStream.stringify())
-        .pipe(fs.createWriteStream(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"))).on('end',function(){console.log("END")});
-        console.log(files);
-        res.json({status:200,file:files});
+        .pipe(streamEscritura);*/
+
+
+        var txt = fs.readFileSync(files[0].fd);  
+           //console.log(typeof text);  
+
+           /* dna.parse(text.toString(), function(err, snps){
+                 JSONStream.stringify(snps)
+                 .pipe(streamEscritura);
+                 //snps = the object with your mutations
+            }); */
+      
+
+      dna.parse(txt.toString(), function(err, snps){
+      console.log(snps);
+      fs.writeFileSync(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify(snps));
+      res.json({status:200,file:files});
+});
+
+       
       });
 //res.json({status:200,file:files});
   },
