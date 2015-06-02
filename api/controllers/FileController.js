@@ -56,7 +56,7 @@ module.exports = {
                 
 
 
-                fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify( snps), function(){
+                fs.writeFile(path.join(__dirname,"..","..",".tmp","uploads", name + ".json"), JSON.stringify(snps), function(){
 
                    console.log("Termino de escribir ");
                    
